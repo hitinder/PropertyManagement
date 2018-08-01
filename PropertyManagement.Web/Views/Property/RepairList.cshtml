@@ -208,33 +208,34 @@
             }
 
             else {
-                // Call Create action method
-                $.post('/Property/SaveRepairData', {
-                    "RepairId": repairId,
-                    "PropertyId": propertyId,
-                    "UrgencyId": ddUrgency,
-                    "RequestTypeId": ddRequestType,
-                    "ServiceCategoryId": ddServiceCategory,
-                    "ProfessionalServiceId": ddProfessionalService,
-                    "Description": description,
-                    "RepairReportedDate": repairReportedDate,
-                    "RepairCompletedDate": repairCompletedDate,
-                    "TechnicianName": technicianName,
-                    "RepairCost": repairCost,
-                    "PaymentTypeId": ddPaymentType,
-                    "Notes": notes,
-                    "StatusId": ddStatus
-                },
-                function (data, status) {
-                        //alert("Data: " + data + "\nStatus: " + status);
-                        if (data == "") {
+                $.ajax({
+                    type: 'post',
+                    url: '/Property/SaveRepairData',
+                    data: {
+                        "RepairId": repairId,
+                        "PropertyId": propertyId,
+                        "UrgencyId": ddUrgency,
+                        "RequestTypeId": ddRequestType,
+                        "ServiceCategoryId": ddServiceCategory,
+                        "ProfessionalServiceId": ddProfessionalService,
+                        "Description": description,
+                        "RepairReportedDate": repairReportedDate,
+                        "RepairCompletedDate": repairCompletedDate,
+                        "TechnicianName": technicianName,
+                        "RepairCost": repairCost,
+                        "PaymentTypeId": ddPaymentType,
+                        "Notes": notes,
+                        "StatusId": ddStatus
+                    },
+                    success: function (response) {
+                        if (response == "") {
                             $("#editForm").dialog("close");
-                            window.location.reload(true);
+                            window.location.reload();
                         }
-                        else {
-                            $("#spCreateMessage").text(data);
-                        }
-                    });
+                        else
+                            $("#spCreateMessage").text("Some Error has occured Errror!!!");
+                    }
+                });
             }
         }
     });
