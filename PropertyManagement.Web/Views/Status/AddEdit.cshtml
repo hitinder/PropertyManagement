@@ -1,0 +1,73 @@
+@model PropertyManagement.BusinessObjectLayer.ViewModels.StatusViewModel
+
+<div class="row">
+    <div class="col-xl-4">
+    </div>
+    <div class="col-xl-4">
+        <div class="card mb-4">
+            <form asp-action="AddEdit" method="post" asp-controller="Status" class="form-horizontal" id="statusForm">
+                <h6 class="card-header with-elements">
+                    @ViewBag.StatusTitle
+                </h6>
+                <div id="tasks-inner">
+                    <div class="card-body">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="StatusId" id="StatusId" class="form-control" />
+                        <div class="form-group required row">
+                            <label class="col-form-label col-sm-3 text-sm-right">Name:</label>
+                            <div class="col-sm-9">
+                                <input asp-for="StatusName" id="txtStatusName" required class="form-control" maxlength="30" />
+                                <span asp-validation-for="StatusName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group required row">
+                            <label class="col-form-label col-sm-3 text-sm-right">Type:</label>
+                            <div class="col-sm-3">
+                                <input asp-for="StatusType" id="txtStatusType" type="number" required class="form-control" maxlength="2" />
+                                <span asp-validation-for="StatusType" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <span style="color:red;" id="spCreateMessage">@ViewBag.ErrorMessage</span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="m-0">
+                </div>
+                <div class="card-footer" style="text-align:right;">
+                        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                        <button type="submit" class="lnkAdd btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-xl-4">
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#txtStatusName").focus();
+
+        $(".lnkAdd").click(function () {
+            var sName = $("#txtStatusName").val();
+            var sType = $("#txtStatusType").val();
+
+            if (sName == "") {
+                $.alert("Status name is required.", "WARNING");
+                $("#txtStatusName").addClass('errorClass');
+                return false;
+            }
+            if (sType == "") {
+                $.alert("Status type is required. \r\n Group status by using a number. Example (Name = Active, Type = 0; Name = Inactive, Type = 0 | Name = Open, Type = 1; Name = In Progress, Type = 1; Name = Completed; Type = 1)", "WARNING");
+                $("#txtStatusType").addClass('errorClass');
+                return false;
+            }
+        });
+    });
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,81 @@
+﻿
+<br>
+<div class="box box-info " id="nopcommerce-news-box">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="nav_link active" id="1"><a data-toggle="tab"  href="#tab-1"> Tenant Information</a></li>
+                        <li class="nav_link" id="2"><a data-toggle="tab"  href="#tab-2">Leases</a></li>
+                        <li class="nav_link" id="3"><a data-toggle="tab"  href="#tab-3">Dependents</a></li>
+                        <li class="nav_link" id="4"><a data-toggle="tab"  href="#tab-4">Vehicles</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane active">
+                            <div id="ProductsDiv1">
+                            </div>
+                        </div>
+                        <div id="tab-2" class="tab-pane active">
+                            <div id="ProductsDiv2">
+                            </div>
+                        </div>
+                        <div id="tab-3" class="tab-pane active">
+                            <div id="ProductsDiv3">
+                            </div>
+                        </div>
+                        <div id="tab-4" class="tab-pane active">
+                            <div id="ProductsDiv4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="txtTenantId" value="@ViewBag.TenantId" />
+<script type="text/javascript">
+    $(function () {
+        var tenantId = $("#txtTenantId").val();
+        var tabId = 1;
+        var tabName = "Edit"
+        loadPartialView(tabId, tenantId, tabName);
+
+        $(".nav_link").click(function () {
+            var _tenantId = $("#txtTenantId").val();
+            var _tabId = $(this).attr("id");
+            var _tabName = ""
+
+            if (_tabId == 1)
+                _tabName = "Edit";
+            if (_tabId == 2)
+                _tabName = "LeaseList";
+            if (_tabId == 3)
+                _tabName = "DependentList";
+            if (_tabId == 4)
+                _tabName = "VehicleList";
+
+            loadPartialView(_tabId, _tenantId, _tabName);
+
+        });
+
+    });
+    function loadPartialView(tabId, id, tabName) {
+        $.ajax({
+            url: "/Tenant/" + tabName,
+            type: 'get',
+            dataType: "html",
+            // contentType: 'application/json; charset=utf-8',
+            data: { TenantId: id },
+            success: function (data) {
+                //success
+                $('#ProductsDiv' + tabId).html(data); //populate the tab content.
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+
+    }
+</script>

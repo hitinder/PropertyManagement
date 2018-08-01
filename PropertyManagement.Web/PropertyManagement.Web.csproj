@@ -18,4 +18,10 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PropertyManagement.BusinessObjectLayer\PropertyManagement.BusinessObjectLayer.csproj" />
+    <ProjectReference Include="..\PropertyManagement.DataObjectLayer\PropertyManagement.DataObjectLayer.csproj" />
+    <ProjectReference Include="..\PropertyManagement.Infrastructure.BaseClass\PropertyManagement.Infrastructure.BaseClass.csproj" />
+  </ItemGroup>
+
 </Project>

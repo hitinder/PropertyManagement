@@ -1,0 +1,24 @@
+﻿@{bool isHorizontal = ViewData["LayoutSidenavHorizontal"] != null && ViewData["LayoutSidenavHorizontal"].ToString() == "True";}
+@{string currentPage = ViewContext.RouteData.Values["Controller"].ToString() + "/" + ViewContext.RouteData.Values["Action"].ToString();}
+<!-- Layout sidenav -->
+<div id="layout-sidenav" class="@(isHorizontal ? "layout-sidenav-horizontal sidenav-horizontal container-p-x flex-grow-0" : "layout-sidenav sidenav-vertical") sidenav bg-sidenav-theme">
+    <!-- Inner -->
+    <ul class="sidenav-inner@(!isHorizontal ? " py-1" : "")">
+        <li class="sidenav-item@(currentPage == "Home/Index" ? " active" : "")">
+            <a href="@Url.Action("Index", "Home")" class="sidenav-link"><i class="sidenav-icon ion ion-ios-contact"></i><div>Home</div></a>
+        </li>
+        <li class="sidenav-item@(currentPage == "Lease/Index" ? " active" : "")">
+            <a href="@Url.Action("Index", "Lease")" class="sidenav-link"><i class="sidenav-icon ion ion-md-desktop"></i><div>Leases</div></a>
+        </li>
+        <li class="sidenav-item@(currentPage == "Tenant/Index" ? " active" : "")">
+            <a href="@Url.Action("Index", "Tenant")" class="sidenav-link"><i class="sidenav-icon ion ion-md-desktop"></i><div>Tenants</div></a>
+        </li>
+        <li class="sidenav-item@(currentPage == "Property/Index" ? " active" : "")">
+            <a href="@Url.Action("Index", "Property")" class="sidenav-link"><i class="sidenav-icon ion ion-md-desktop"></i><div>Properties</div></a>
+        </li>
+        <li class="sidenav-item@(currentPage == "Status/Index" ? " active" : "")">
+            <a href="@Url.Action("Index", "Status")" class="sidenav-link"><i class="sidenav-icon ion ion-md-desktop"></i><div>Status</div></a>
+        </li>
+    </ul>
+</div>
+<!-- / Layout sidenav -->

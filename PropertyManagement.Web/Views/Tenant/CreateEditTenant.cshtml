@@ -1,0 +1,227 @@
+﻿@model PropertyManagement.BusinessObjectLayer.ViewModels.TenantViewModel
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card mb-12">
+            <form asp-action="CreateEditTenant" method="post" asp-controller="Tenant" class="form-horizontal" id="tenantForm">
+                <h6 class="card-header with-elements">
+                    Add New Tenant
+                </h6>
+                <div id="tasks-inner">
+                    <div class="card-body">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="TenantId" id="TenantId" class="form-control" />
+                        <div class="form-group required row">
+                            <label asp-for="FirstName" class="col-md-1 col-form-label">First Name:</label>
+                            <div class="col-md-2">
+                                <input asp-for="FirstName" class="form-control" required id="txtFirstName" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+
+                            <label asp-for="LastName" class="col-md-1 col-form-label">Last Name:</label>
+                            <div class="col-md-2">
+                                <input asp-for="LastName" class="form-control" required id="txtLastName" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+
+                            <label asp-for="DOB" class="col-md-1 col-form-label">DOB:</label>
+                            <div class="col-md-2">
+                                <input asp-for="DOB" class="form-control" required id="txtDOB" />
+                                <span asp-validation-for="DOB" class="text-danger"></span>
+                            </div>
+
+                            <label asp-for="Age" class="col-md-1 col-form-label">Age:</label>
+                            <div class="col-md-2">
+                                <input asp-for="Age" class="form-control" type="number" required id="txtAge" />
+                                <span asp-validation-for="Age" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group required row">
+                            <label asp-for="Gender" class="col-md-1 col-form-label">Gender:</label>
+                            <div class="col-md-2">
+                                <input asp-for="Gender" class="form-control" required id="txtGender" />
+                                <span asp-validation-for="Gender" class="text-danger"></span>
+                            </div>
+
+                            <label asp-for="DriverLicenseNo" class="col-md-1 col-form-label">DL#:</label>
+                            <div class="col-md-2">
+                                <input asp-for="DriverLicenseNo" class="form-control" required id="txtDriverLicense" />
+                                <span asp-validation-for="DriverLicenseNo" class="text-danger"></span>
+                            </div>
+
+                            <label asp-for="Phone" class="col-md-1 col-form-label">Phone:</label>
+                            <div class="col-md-2">
+                                <input asp-for="Phone" class="form-control" required id="txtPhone" />
+                                <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+
+                            <label asp-for="Email" class="col-md-1 col-form-label">Email:</label>
+                            <div class="col-md-2">
+                                <input asp-for="Email" class="form-control" required id="txtEmail" type="email" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="EmergencyContact" class="col-md-1 col-form-label">Emergency Contact:</label>
+                            <div class="col-md-11">
+                                <textarea class="form-control" rows="2" id="txtEmergencyContact" asp-for="EmergencyContact"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group required row">
+                            <label asp-for="PropertyId" class="col-md-1 col-form-label">Property Leased:</label>
+                            <div class="col-md-5">
+                                @Html.DropDownListFor(model => model.PropertyId, new SelectList(ViewBag.PropertiesForLease as System.Collections.IEnumerable, "Value", "Text"), "", new { id = "ddProperty", @class = "form-control" })
+                                <span asp-validation-for="PropertyId" class="text-danger"></span>
+                            </div>
+                            <label asp-for="MoveInDate" class="col-md-1 col-form-label">Move In Date:</label>
+                            <div class="col-md-2">
+                                <input asp-for="MoveInDate" class="form-control" required id="txtMoveInDate" />
+                                <span asp-validation-for="MoveInDate" class="text-danger"></span>
+                            </div>
+
+                            <label asp-for="MoveOutDate" class="col-md-1 col-form-label-nrq">Move Out Date:</label>
+                            <div class="col-md-2">
+                                <input asp-for="MoveOutDate" class="form-control" id="txtMoveOutDate" />
+                                <span asp-validation-for="MoveOutDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group required row">
+                            <label asp-for="MonthlyRent" class="col-md-1 col-form-label">Monthly Rent:</label>
+                            <div class="col-md-2">
+                                <input asp-for="MonthlyRent" type="number" class="form-control" required id="txtMonthlyRent" />
+                                <span asp-validation-for="MonthlyRent" class="text-danger"></span>
+                            </div>
+                            <label asp-for="DepositAmount" class="col-md-1 col-form-label">Deposit:</label>
+                            <div class="col-md-2">
+                                <input asp-for="DepositAmount" type="number" class="form-control" required id="txtDepositAmount" />
+                                <span asp-validation-for="DepositAmount" class="text-danger"></span>
+                            </div>
+                            <label asp-for="DepositReturned" class="col-md-1 col-form-label-nrq">Deposit Returned:</label>
+                            <div class="col-md-2">
+                                <input asp-for="DepositReturned" type="number" class="form-control" />
+                                <span asp-validation-for="DepositReturned" class="text-danger"></span>
+                            </div>
+                            <label asp-for="DepositWithHold" class="col-md-1 col-form-label-nrq">Deposit Withhold:</label>
+                            <div class="col-md-2">
+                                <input asp-for="DepositWithHold" type="number" class="form-control" />
+                                <span asp-validation-for="DepositWithHold" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="ProratedRent" class="col-md-1 col-form-label-nrq">Prorated Rent:</label>
+                            <div class="col-md-2">
+                                <input asp-for="ProratedRent" type="number" class="form-control" />
+                                <span asp-validation-for="ProratedRent" class="text-danger"></span>
+                            </div>
+                            <label asp-for="Notes" class="col-md-1 col-form-label">Notes:</label>
+                            <div class="col-md-5">
+                                <textarea class="form-control" rows="3" id="Notes" asp-for="Notes"></textarea>
+                            </div>
+                            @if (Model.TenantId > 0)
+                            {
+                                <label asp-for="StatusId" class="col-md-1 col-form-label">Status:</label>
+                                <div class="col-md-2">
+                                    @Html.DropDownListFor(model => model.StatusId, new SelectList(ViewBag.Status as System.Collections.IEnumerable, "Value", "Text"), new { id = "ddStatus", @class = "form-control" })
+                                    <span asp-validation-for="StatusId" class="text-danger"></span>
+                                </div>
+                            }
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <span style="color:red;" id="spCreateMessage">@ViewBag.ErrorMessage</span>
+                            </div>
+                        </div>
+                        <div class="card-footer" style="text-align:right;">
+                            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                            <button type="submit" class="lnkAddEdit btn btn-primary" id="btnSave">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        $("#txtDOB").datepicker();
+        $("#txtMoveInDate").datepicker();
+        $("#txtMoveOutDate").datepicker();
+
+        $(".lnkAddEdit").click(function () {
+            var firstname = $("#txtFirstName").val();
+            var lastname = $("#txtLastName").val();
+            var dob = $("#txtDOB").val();
+            var driverlicenseno = $("#txtDriverLicense").val();
+            var gender = $("#txtGender").val();
+            var email = $("#txtEmail").val();
+            var phone = $("#txtPhone").val();
+            var emergencycontact = $("#txtEmergencyContact").val();
+            var age = $("#Age").val();
+            var propertyid = $("#ddProperty").val();
+            var moveindate = $("#txtMoveInDate").val();
+            var monthlyrent = $("#txtMonthlyRent").val();
+            var deposit = $("#txtDepositAmount").val();
+
+            if (firstname == "") {
+                $.alert("First Name is required field.", "WARNING");
+                return false;
+            }
+            else if (lastname == "") {
+                $.alert("Last Name is required field.")
+                return false;
+            }
+            else if (dob == "") {
+                $.alert("Date of birth is required field.")
+                return false;
+            }
+            else if (age == "") {
+                $.alert("Age is required field.")
+                return false;
+            }
+            else if (gender == "") {
+                $.alert("Gender is required field.")
+                return false;
+            }
+            else if (age == "") {
+                $.alert("Age is required field.")
+                return false;
+            }
+            else if (driverlicenseno == "") {
+                $.alert("Driver License Number is required field.")
+                return false;
+            }
+            else if (phone == "") {
+                $.alert("Phone is required field.")
+                return false;
+            }
+            else if (email == "") {
+                $.alert("eMail is required field.")
+                return false;
+            }
+            else if (propertyid == "") {
+                $.alert("Property for lease is required field.")
+                return false;
+            }
+            else if (moveindate == "") {
+                $.alert("Move In Date is required field.")
+                return false;
+            }
+            else if (monthlyrent == "") {
+                $.alert("Monthly Rent is required field.")
+                return false;
+            }
+            else if (deposit == "") {
+                $.alert("Deposit is required field.")
+                return false;
+            }
+            else
+                return true;
+        });
+    });
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,87 @@
+﻿
+
+<div class="box box-info " id="nopcommerce-news-box">
+    <div class="box-body">
+        <div class="row">
+            <div id="tabs" class="col-xl-12">
+            <div class="nav-tabs-top mb-4">
+                <ul  class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" id="1" href="#edit">Edit</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" id="2" href="#repair">Repairs</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="edit">
+                        <div class="card-body">
+                            <div id="ProductsDiv1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="repair">
+                        <div class="card-body">
+                            <div id="ProductsDiv2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="txtPropertyId" value="@ViewBag.PropertyId" />
+<script type="text/javascript">
+            $(function () {
+                var propertyId = $("#txtPropertyId").val();
+                var tabId = '@ViewBag.TabId';
+
+                loadPartialView(tabId, propertyId);
+
+                $(".nav-link").click(function () {
+                    var _propertyId = $("#txtPropertyId").val();
+                    var _tabId = $(this).attr("id");
+
+                    loadPartialView(_tabId, _propertyId);
+
+                });
+
+            });
+            function loadPartialView(tabId, id) {
+                var _tabName = "";
+                if (tabId == 1) {
+                    _tabName = "Edit";
+
+                    $("#2").removeClass("active");
+                    $("#1").addClass("active");
+                    $("#repair").removeClass("show active");
+                    $("#edit").addClass("show active");
+                }
+                if (tabId == 2) {
+                    _tabName = "RepairList";
+
+                    $("#1").removeClass("active");
+                    $("#2").addClass("active");
+                    $("#edit").removeClass("show active");
+                    $("#repair").addClass("show active");
+                }
+                $.ajax({
+                    url: "/Property/" + _tabName,
+                    type: 'get',
+                    dataType: "html",
+                    data: { PropertyId: id },
+                    success: function (data) {
+                        $('#ProductsDiv' + tabId).html(data); //populate the tab content.
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+
+            }
+
+
+        </script>

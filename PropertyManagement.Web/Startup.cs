@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PropertyManagement.Web.Data;
-using PropertyManagement.Web.Models;
-using PropertyManagement.Web.Services;
+using PropertyManagement.Infrastructure.BaseClass.ApplicationProperties;
+using PropertyManagement.BusinessObjectLayer;
+using PropertyManagement.DataObjectLayer;
 
 namespace PropertyManagement.Web
 {
@@ -26,17 +26,35 @@ namespace PropertyManagement.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>()
+            //    .AddDefaultTokenProviders();
 
-            // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
+            //// Add application services.
+            //services.AddTransient<IEmailSender, EmailSender>();
 
+            //services.AddMvc();
             services.AddMvc();
+            services.AddScoped<IApplicationProperties, ApplicationProperties>();
+            services.AddScoped<IStatusService, StatusService>();
+            services.AddScoped<IStatusRepository, StatusRepository>();
+            services.AddScoped<IPropertyService, PropertyService>();
+            services.AddScoped<IPropertyRepository, PropertyRepository>();
+            services.AddScoped<ITenantService, TenantService>();
+            services.AddScoped<ITenantRepository, TenantRepository>();
+            services.AddScoped<IRepairService, RepairService>();
+            services.AddScoped<IRepairRepository, RepairRepository>();
+            services.AddScoped<ICommonListService, CommonListService>();
+            services.AddScoped<ICommonListRepository, CommonListRepository>();
+            services.AddScoped<IVehicleService, VehicleService>();
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddScoped<IDependentService, DependentService>();
+            services.AddScoped<IDependentRepository, DependentRepository>();
+            services.AddScoped<ILeaseService, LeaseService>();
+            services.AddScoped<ILeaseRepository, LeaseRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
