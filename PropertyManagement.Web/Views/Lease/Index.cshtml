@@ -2,7 +2,12 @@
 @model IEnumerable<PropertyManagement.BusinessObjectLayer.ViewModels.LeaseViewModel>
 <link href="~/vendor/libs/datatables/datatables.min.css" rel="stylesheet" />
 <script src="~/vendor/libs/datatables/datatables.min.js"></script>
-
+<style>
+    .spaceRight{
+        padding-right:5px;
+        margin-bottom:5px;
+    }
+</style>
 <div class="row">
     <div class="col-md-12">
         <div class="box box-info " id="nopcommerce-news-box">
@@ -12,7 +17,6 @@
                             <div class="col-sm-4 mb-3">
                                 @Html.DropDownList("Year", (SelectList)ViewBag.Years, "", new { id = "ddYears", @class = "form-control" })
                             </div>
-
                             <div class="col-lg-12">
                                 <div class="demo-inline-spacing mt-3">
                                     @{
@@ -20,9 +24,13 @@
                                         foreach (var m in ViewBag.Months)
                                         {
                                             if (curMonth == m.MonthId)
-                                            { <button type="button" id="@m.MonthId" class="btn btn-primary">@m.MonthAbbr-Rent</button>}
+                                            { 
+                                                <button type="button" id="@m.MonthId" class="btn btn-primary spaceRight">@m.MonthAbbr-Rent &nbsp; </button>
+                                            }
                                             else
-                                            {<button type="button" id="@m.MonthId" class="btn btn-secondary">@m.MonthAbbr-Rent</button>}
+                                            {
+                                                <button type="button" id="@m.MonthId" class="btn btn-secondary spaceRight">@m.MonthAbbr-Rent &nbsp; </button>
+                                            }
                                         }
                                     }
                                 </div>
@@ -67,7 +75,6 @@
                                     <th>
                                         Balance
                                     </th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -78,7 +85,7 @@
                                             @Html.DisplayFor(modelItem => item.LeaseId)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.PropertyId)
+                                            <a Id=@item.LeaseId class="lnkEditLease" href="#">@Html.DisplayFor(modelItem => item.FullAddress)</a>
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.TenantId)
@@ -98,11 +105,6 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.BalanceDue)
                                         </td>
-                                        <td>
-
-                                            <a class="btn btn-coffe btn-xs" href="/Lease/TabView?PropertyId=@item.LeaseId&TabId=2"><i class="fa fa-edit"></i>  Repairs</a>
-                                        </td>
-
                                     </tr>
                                 }
                             </tbody>
@@ -112,8 +114,8 @@
     </div>
 </div>
 </div>
-<div id="editForm"></div>
-
+<div id="AddPropertyForm"></div>
+<div id="EditLeaseForm"></div>
 
 <script>
     $(function () {
@@ -153,8 +155,6 @@
             $(this).addClass('row_selected');
         });
 
-
-
         function LoadData(year, month) {
 
             $.post('/Lease/Index', {
@@ -172,9 +172,7 @@
                 });
         }
 
-
-        //jQueryUI method to create dialog box
-        $("#editForm").dialog({
+        $("#AddPropertyForm").dialog({
             autoOpen: false,
             modal: true,
             dialogClass: 'dialogClass',
@@ -182,7 +180,7 @@
             position: { my: 'center', at: 'top+150' },
             buttons: {
                 'Save': function () {
-                    SaveLeaseData();
+                    SaveSelectedProperties();
                 },
                 'Cancel': function () { $(this).dialog('close'); }
             }
@@ -197,12 +195,11 @@
             }
             $.ajax({
                 url: "/Lease/AddProperties",
-               // data: { RepairId: repairId, PropertyId: pId },
                 type: 'Get',
                 success: function (msg) {
-                    $("#editForm").dialog("open");
-                    $("#editForm").empty().append(msg);
-                    $("#editForm").dialog({
+                    $("#AddPropertyForm").dialog("open");
+                    $("#AddPropertyForm").empty().append(msg);
+                    $("#AddPropertyForm").dialog({
                         title: Title
                     });
                 },
@@ -212,6 +209,90 @@
             });
         });
 
+
+
+        function validateSelection() {
+            var Ids = "";
+            $('table [type="checkbox"]').each(function (i, chk) {
+                if (chk.checked) {
+                    Ids = $(this).attr("id") + ", " + Ids;
+                    alert(Ids);
+                    return true;
+                }
+                else {
+                    alert("not checked")
+                    return false;
+                }
+            });
+        }
+
+        function SaveSelectedProperties() {
+            var yearSel = $('#ddlYears :selected').text();
+            var Ids = "";
+            $('table [type="checkbox"]').each(function (i, chk) {
+                if (chk.checked) {
+                    Ids = $(this).attr("id") + "," + Ids;
+                }
+            });
+            if (Ids == "") {
+                alert("Please select at least one property.");
+                return false;
+            }
+            else {
+                $.ajax({
+                    type: 'post',
+                    url: '/Lease/SaveSelectedProperties',
+                    data: {
+                        "Year": yearSel,
+                        "PropertyIds": Ids
+                    },
+                    success: function (response) {
+                        if (response == "") {
+                            $("#editForm").dialog("close");
+                            window.location.reload();
+                        }
+                        else
+                            $("#spMessage").text(response);
+                    }
+                });
+
+            }
+        }
+
+        /* EDIT Lease Form */
+        $(".lnkEditLease").click(function () {
+            var leaseId = $(this).attr('id');
+            var Title = "Edit Lease Form"
+            $.ajax({
+                url: "/Lease/EditLease",
+                data: { LeaseId: leaseId },
+                type: 'Get',
+                success: function (msg) {
+                    $("#EditLeaseForm").dialog("open");
+                    $("#EditLeaseForm").empty().append(msg);
+                    $("#EditLeaseForm").dialog({
+                        title: Title
+                    });
+                },
+                error: function () {
+                    alert("something seems wrong");
+                }
+            });
+        });
+
+        $("#EditLeaseForm").dialog({
+            autoOpen: false,
+            modal: true,
+            dialogClass: 'dialogClass',
+            width: dialogWidth,
+            position: { my: 'center', at: 'top+150' },
+            buttons: {
+                'Save': function () {
+                    SaveLeaseData();
+                },
+                'Cancel': function () { $(this).dialog('close'); }
+            }
+        });
 
     });
 

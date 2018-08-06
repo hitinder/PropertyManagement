@@ -13,6 +13,7 @@ namespace PropertyManagement.BusinessObjectLayer
         Task LeaseAdd(int PropertyId, int TenantId, string LeaseBeginDate, string LeaseEndDate, decimal MonthlyLease, decimal ProratedAmount, string ProratedFromDate, string ProratedToDate, string Notes, int StatusId);
         Task LeaseUpdate(int LeaseId, int PropertyId, int TenantId, string LeaseBeginDate, string LeaseEndDate, decimal MonthlyLease, decimal ProratedAmount, string ProratedFromDate, string ProratedToDate, string Notes, int StatusId);
 
-        Task<List<PropertiesForLeaseViewModel>> PropertiesForLease();  
+        Task<List<PropertiesForLeaseViewModel>> PropertiesForLease();
+        Task SaveSelectedProperties(int Year, string PropertyIds);
     }
 }

@@ -11,6 +11,8 @@ namespace PropertyManagement.BusinessObjectLayer
     {
         Task<List<TenantViewModel>> TenantList();
 
+        List<TenantActiveListViewModel> TenantActive();
+
         Task<TenantViewModel> TenantById(int TenantId);
 
         Task SaveTenantData(int TenantId, string FirstName, string LastName, string DOB, int Age, string Gender, string DriverLicenseNo, string Phone, string Email,

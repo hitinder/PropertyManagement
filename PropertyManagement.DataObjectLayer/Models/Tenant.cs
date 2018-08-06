@@ -66,4 +66,11 @@ namespace PropertyManagement.DataObjectLayer.Models
         public decimal MonthlyRent { get; set; }
         public decimal ProratedRent { get; set; }
     }
-}
+    public class TenantActiveList
+    {
+        public int TenantId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string FullName { get; set; }
+    }
+    }

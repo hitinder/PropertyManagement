@@ -10,6 +10,7 @@ namespace PropertyManagement.DataObjectLayer
    public interface ITenantRepository
     {
         Task<List<TenantList>> TenantList();
+        List<TenantActiveList> TenantActive();
         Task<Tenant> TenantById(int TenantId);
 
         Task SaveTenantData(int TenantId, string FirstName, string LastName, string DOB, int Age, string Gender, string DriverLicenseNo, string Phone, string Email,

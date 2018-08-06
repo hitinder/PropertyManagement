@@ -40,4 +40,12 @@ namespace PropertyManagement.BusinessObjectLayer.ViewModels
         [DisplayFormat(DataFormatString = "{0:C}")]
         public decimal DepositWithHold { get; set; }
     }
+
+    public class TenantActiveListViewModel
+    {
+        public int TenantId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string FullName { get; set; }
+    }
 }

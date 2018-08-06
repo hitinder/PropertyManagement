@@ -1,0 +1,74 @@
+﻿@model PropertyManagement.BusinessObjectLayer.ViewModels.LeaseViewModel
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card mb-12">
+            <form asp-action="AddEditRepair" method="post" asp-controller="Property" class="form-horizontal" id="repairForm">
+
+                <div id="tasks-inner">
+                    <div class="card-body">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="LeaseId" id="RepairId" />
+                        <input type="hidden" asp-for="PropertyId" id="PropertyId" />
+                        <div class="form-group required row">
+                            <label asp-for="TenantId" class="col-md-2 col-form-label">Tenant:</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.TenantId, new SelectList(ViewBag.Tenants as System.Collections.IEnumerable, "Value", "Text"), "", new { id = "ddTenantId", @class = "form-control" })
+                                <span asp-validation-for="TenantId" class="text-danger"></span>
+                            </div>
+                            <label asp-for="RentAmount" class="col-md-2 col-form-label">Rent Amount:</label>
+                            <div class="col-md-4">
+                                <input asp-for="RentAmount" id="txtRentAmount" class="form-control" />
+                                <span asp-validation-for="RentAmount" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group required row">
+                            <label asp-for="AmountReceived" class="col-md-2 col-form-label">Amount Received:</label>
+                            <div class="col-md-4">
+                                <input asp-for="AmountReceived" id="txtAmountReceived" class="form-control" />
+                                <span asp-validation-for="AmountReceived" class="text-danger"></span>
+                            </div>
+                            <label asp-for="PastDue" class="col-md-2 col-form-label-nrq">Past Due:</label>
+                            <div class="col-md-4">
+                                <input asp-for="PastDue" id="txtPastDue" class="form-control" />
+                                <span asp-validation-for="PastDue" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group required row">
+                            <label asp-for="CurrentDue" class="col-md-2 col-form-label-nrq">Current Due:</label>
+                            <div class="col-md-4">
+                                <input asp-for="CurrentDue" id="txtCurrentDue" class="form-control" />
+                                <span asp-validation-for="CurrentDue" class="text-danger"></span>
+                            </div>
+                            <label asp-for="BalanceDue" class="col-md-2 col-form-label-nrq">BalanceDue:</label>
+                            <div class="col-md-4">
+                                <input asp-for="BalanceDue" id="txtBalanceDue" class="form-control" />
+                                <span asp-validation-for="BalanceDue" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group row">
+                                <label asp-for="Notes" class="col-md-2 col-form-label">Notes:</label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control" rows="3" id="txtNotes" asp-for="Notes"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <span style="color:red;" id="spCreateMessage">@ViewBag.ErrorMessage</span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="m-0">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

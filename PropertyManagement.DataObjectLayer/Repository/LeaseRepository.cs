@@ -95,5 +95,17 @@ namespace PropertyManagement.DataObjectLayer
                 await sqlConnection.ExecuteAsync("usp_LeaseUpdate", dynamicParameters, commandType: CommandType.StoredProcedure);
             }
         }
+
+        public async Task SaveSelectedProperties(int Year, string PropertyIds)
+        {
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                await sqlConnection.OpenAsync();
+                var dynamicParameters = new DynamicParameters();
+                dynamicParameters.Add("@p_intYear", Year);
+                dynamicParameters.Add("@p_chrPropertyIds", PropertyIds);
+                await sqlConnection.ExecuteAsync("usp_LeaseAddProperties", dynamicParameters, commandType: CommandType.StoredProcedure);
+            }
+        }
     }
 }

@@ -52,6 +52,23 @@ namespace PropertyManagement.BusinessObjectLayer
             return tenantVM;
         }
 
+        public List<TenantActiveListViewModel> TenantActive()
+        {
+            List<TenantActiveList> tenant =  _tenantRepository.TenantActive();
+
+            List<TenantActiveListViewModel> tenantVM = new List<TenantActiveListViewModel>();
+            foreach (TenantActiveList t in tenant)
+            {
+                TenantActiveListViewModel tVM = new TenantActiveListViewModel();
+                tVM.TenantId = t.TenantId;
+                tVM.FirstName = t.FirstName;
+                tVM.LastName = t.LastName;
+                tVM.FullName = t.FullName;
+                tenantVM.Add(tVM);
+            }
+
+            return tenantVM;
+        }
 
 
         public async Task<TenantViewModel> TenantById(int TenantId)

@@ -28,6 +28,7 @@ namespace PropertyManagement.BusinessObjectLayer
                 LeaseViewModel lVM = new LeaseViewModel();
                 lVM.LeaseId = l.LeaseId;
                 lVM.PropertyId = l.PropertyId;
+                lVM.FullAddress = l.FullAddress;
                 lVM.TenantId = l.TenantId;
                 lVM.Year = l.Year;
                 lVM.Month = l.Month;
@@ -89,6 +90,11 @@ namespace PropertyManagement.BusinessObjectLayer
         public async Task LeaseUpdate(int LeaseId, int PropertyId, int TenantId, string LeaseBeginDate, string LeaseEndDate, decimal MonthlyLease, decimal ProratedAmount, string ProratedFromDate, string ProratedToDate, string Notes, int StatusId)
         {
             await _leaseRepository.LeaseUpdate(LeaseId, PropertyId, TenantId, LeaseBeginDate, LeaseEndDate, MonthlyLease, ProratedAmount, ProratedFromDate, ProratedToDate, Notes, StatusId);
+        }
+
+        public async Task SaveSelectedProperties(int Year, string PropertyIds)
+        {
+            await _leaseRepository.SaveSelectedProperties(Year, PropertyIds);
         }
     }
 }

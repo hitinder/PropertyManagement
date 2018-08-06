@@ -8,6 +8,7 @@ namespace PropertyManagement.BusinessObjectLayer.ViewModels
     {
         public int LeaseId { get; set; }
         public int PropertyId { get; set; }
+        public string FullAddress { get; set; }
         public int TenantId { get; set; }
         public int Year { get; set; }
         public int Month { get; set; }

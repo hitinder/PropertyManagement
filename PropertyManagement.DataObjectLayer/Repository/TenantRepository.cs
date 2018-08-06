@@ -30,6 +30,15 @@ namespace PropertyManagement.DataObjectLayer
             }
         }
 
+        public List<TenantActiveList> TenantActive()
+        {
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                var query =  sqlConnection.Query<TenantActiveList>("usp_TenantsActive", null, commandType: CommandType.StoredProcedure);
+                return query.ToList();
+            }
+        }
 
         public async Task<Tenant> TenantById(int TenantId)
         {
