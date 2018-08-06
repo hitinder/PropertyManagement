@@ -82,14 +82,9 @@ namespace PropertyManagement.BusinessObjectLayer
             return lVM;
         }
 
-        public async Task LeaseAdd(int PropertyId, int TenantId, string LeaseBeginDate, string LeaseEndDate, decimal MonthlyLease, decimal ProratedAmount, string ProratedFromDate, string ProratedToDate, string Notes, int StatusId)
+        public async Task LeaseUpdate(int LeaseId, int TenantId, decimal RentAmount, decimal AmountRecieved, string DateRecieved, decimal PastDue, decimal CurrentDue, decimal BalanceDue, string Notes)
         {
-            await _leaseRepository.LeaseAdd(PropertyId, TenantId, LeaseBeginDate, LeaseEndDate, MonthlyLease, ProratedAmount, ProratedFromDate, ProratedToDate, Notes, StatusId);
-        }
-
-        public async Task LeaseUpdate(int LeaseId, int PropertyId, int TenantId, string LeaseBeginDate, string LeaseEndDate, decimal MonthlyLease, decimal ProratedAmount, string ProratedFromDate, string ProratedToDate, string Notes, int StatusId)
-        {
-            await _leaseRepository.LeaseUpdate(LeaseId, PropertyId, TenantId, LeaseBeginDate, LeaseEndDate, MonthlyLease, ProratedAmount, ProratedFromDate, ProratedToDate, Notes, StatusId);
+            await _leaseRepository.LeaseUpdate(LeaseId, TenantId, RentAmount, AmountRecieved, DateRecieved, PastDue, CurrentDue, BalanceDue, Notes);
         }
 
         public async Task SaveSelectedProperties(int Year, string PropertyIds)

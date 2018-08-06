@@ -7,27 +7,34 @@
                 <div id="tasks-inner">
                     <div class="card-body">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="LeaseId" id="RepairId" />
+                        <input type="hidden" asp-for="LeaseId" id="txtLeaseId" />
                         <input type="hidden" asp-for="PropertyId" id="PropertyId" />
                         <div class="form-group required row">
                             <label asp-for="TenantId" class="col-md-2 col-form-label">Tenant:</label>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(model => model.TenantId, new SelectList(ViewBag.Tenants as System.Collections.IEnumerable, "Value", "Text"), "", new { id = "ddTenantId", @class = "form-control" })
+                                @Html.DropDownListFor(model => model.TenantId, new SelectList(ViewBag.Tenants as System.Collections.IEnumerable, "Value", "Text"), "", new { id = "ddlTenants", @class = "form-control" })
                                 <span asp-validation-for="TenantId" class="text-danger"></span>
                             </div>
+                        </div>
+                        <div class="form-group required row">
                             <label asp-for="RentAmount" class="col-md-2 col-form-label">Rent Amount:</label>
                             <div class="col-md-4">
                                 <input asp-for="RentAmount" id="txtRentAmount" class="form-control" />
                                 <span asp-validation-for="RentAmount" class="text-danger"></span>
                             </div>
-                        </div>
-                        <div class="form-group required row">
                             <label asp-for="AmountReceived" class="col-md-2 col-form-label">Amount Received:</label>
                             <div class="col-md-4">
                                 <input asp-for="AmountReceived" id="txtAmountReceived" class="form-control" />
                                 <span asp-validation-for="AmountReceived" class="text-danger"></span>
                             </div>
-                            <label asp-for="PastDue" class="col-md-2 col-form-label-nrq">Past Due:</label>
+                        </div>
+                        <div class="form-group required row">
+                            <label asp-for="DateReceived" class="col-md-2 col-form-label">Date Received:</label>
+                            <div class="col-md-4">
+                                <input asp-for="DateReceived" id="txtDateReceived" class="form-control" placeholder="MM/DD/YYYY" />
+                                <span asp-validation-for="DateReceived" class="text-danger"></span>
+                            </div>
+                            <label asp-for="PastDue" class="col-md-2 col-form-label">Past Due:</label>
                             <div class="col-md-4">
                                 <input asp-for="PastDue" id="txtPastDue" class="form-control" />
                                 <span asp-validation-for="PastDue" class="text-danger"></span>
@@ -72,3 +79,8 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
+<script>
+    $(function () {
+        $("#DateReceived").datepicker();
+    });
+</script>

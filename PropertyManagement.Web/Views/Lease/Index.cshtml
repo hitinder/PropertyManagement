@@ -294,6 +294,54 @@
             }
         });
 
+        function SaveLeaseData() {
+            var leaseId = $("#txtLeaseId").val();
+            var tenantSel = $('#ddlTenants :selected').text();
+            var rentAmount = $("#txtRentAmount").val();
+            var amountRecieved = $("#txtAmountReceived").val();
+            var dateReceived = $("#txtDateReceived").val();
+            var pastDue = $("#txtPastDue").val();
+            var currentDue = $("#txtCurrentDue").val();
+            var balanceDue = $("#txtBalanceDue").val();
+            var notes = $("#txtNotes").val();
+
+            if (rentAmount == "")
+            {
+                alert("Enter rent payment");
+                return false;
+            }
+            if (amountRecieved == "") {
+                alert("Enter recieved payment");
+                return false;
+            }
+            else {
+                $.ajax({
+                    type: 'post',
+                    url: '/Lease/SaveDataLease',
+                    data: {
+                        "LeaseId": leaseId,
+                        "TenantId": tenantSel,
+                        "RentAmount": rentAmount,
+                        "AmountRecieved": amountRecieved,
+                        "DateReceived": dateReceived,
+                        "PastDue": pastDue,
+                        "CurrentDue": currentDue,
+                        "BalanceDue": balanceDue,
+                        "Notes": notes
+                    },
+                    success: function (response) {
+                        if (response == "") {
+                            $("#EditLeaseForm").dialog("close");
+                            window.location.reload();
+                        }
+                        else
+                            $("#spMessage").text(response);
+                    }
+                });
+
+            }
+        }
+
     });
 
 </script>

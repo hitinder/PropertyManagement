@@ -55,43 +55,22 @@ namespace PropertyManagement.DataObjectLayer
             }
         }
         
-                public async Task LeaseAdd(int PropertyId, int TenantId, string LeaseBeginDate, string LeaseEndDate, decimal MonthlyLease, decimal ProratedAmount, string ProratedFromDate, string ProratedToDate, string Notes, int StatusId)
-                {
-                    using (var sqlConnection = new SqlConnection(connectionString))
-                    {
-                        await sqlConnection.OpenAsync();
-                        var dynamicParameters = new DynamicParameters();
-                        dynamicParameters.Add("@p_intPropertyId", PropertyId);
-                        dynamicParameters.Add("@p_intTenantId", TenantId);
-                        dynamicParameters.Add("@p_chrLeaseBeginDate", LeaseBeginDate);
-                        dynamicParameters.Add("@p_chrLeaseEndDate", LeaseEndDate);
-                        dynamicParameters.Add("@p_chrMonthlyLease", MonthlyLease);
-                        dynamicParameters.Add("@p_chrProratedAmount", ProratedAmount);
-                        dynamicParameters.Add("@p_chrProratedFromDate", ProratedFromDate);
-                        dynamicParameters.Add("@p_chrProratedToDate", ProratedToDate);
-                        dynamicParameters.Add("@p_chrNotes", Notes);
-                        dynamicParameters.Add("@p_intStatusId", StatusId);
-                        await sqlConnection.ExecuteAsync("usp_LeaseAdd", dynamicParameters, commandType: CommandType.StoredProcedure);
-                    }
-                }
 
-        public async Task LeaseUpdate(int LeaseId, int PropertyId, int TenantId, string LeaseBeginDate, string LeaseEndDate, decimal MonthlyLease, decimal ProratedAmount, string ProratedFromDate, string ProratedToDate, string Notes, int StatusId)
+        public async Task LeaseUpdate(int LeaseId, int TenantId, decimal RentAmount, decimal AmountRecieved, string DateRecieved, decimal PastDue, decimal CurrentDue, decimal BalanceDue, string Notes)
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 await sqlConnection.OpenAsync();
                 var dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("@p_intLeaseId", LeaseId);
-                dynamicParameters.Add("@p_intPropertyId", PropertyId);
                 dynamicParameters.Add("@p_intTenantId", TenantId);
-                dynamicParameters.Add("@p_chrLeaseBeginDate", LeaseBeginDate);
-                dynamicParameters.Add("@p_chrLeaseEndDate", LeaseEndDate);
-                dynamicParameters.Add("@p_chrMonthlyLease", MonthlyLease);
-                dynamicParameters.Add("@p_chrProratedAmount", ProratedAmount);
-                dynamicParameters.Add("@p_chrProratedFromDate", ProratedFromDate);
-                dynamicParameters.Add("@p_chrProratedToDate", ProratedToDate);
+                dynamicParameters.Add("@p_chrRentAmount", RentAmount);
+                dynamicParameters.Add("@p_chrAmountRecieved", AmountRecieved);
+                dynamicParameters.Add("@p_chrDateRecieved", DateRecieved);
+                dynamicParameters.Add("@p_chrPastDue", PastDue);
+                dynamicParameters.Add("@p_chrCurrentDue", CurrentDue);
+                dynamicParameters.Add("@p_chrBalanceDue", BalanceDue);
                 dynamicParameters.Add("@p_chrNotes", Notes);
-                dynamicParameters.Add("@p_intStatusId", StatusId);
                 await sqlConnection.ExecuteAsync("usp_LeaseUpdate", dynamicParameters, commandType: CommandType.StoredProcedure);
             }
         }

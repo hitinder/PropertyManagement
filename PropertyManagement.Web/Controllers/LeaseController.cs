@@ -89,5 +89,20 @@ namespace PropertyManagement.Web.Controllers
             var selectList = new SelectList(tenants, TenantId, FullName, TenantIdSel);
             ViewBag.Tenants = selectList;
         }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveDataLease(int LeaseId, int TenantId, decimal RentAmount, decimal AmountRecieved, string DateRecieved, decimal PastDue, decimal CurrentDue, decimal BalanceDue, string Notes)
+        {
+            try
+            {
+                await this._leaseService.LeaseUpdate(LeaseId, TenantId, RentAmount, AmountRecieved, DateRecieved, PastDue, CurrentDue, BalanceDue, Notes);
+            }
+            catch (SqlException ex)
+            {
+                var errorMessage = ex.Message;
+                return Content(errorMessage.ToString(), "text/plain");
+            }
+            return Content("");
+        }
     }
 }
