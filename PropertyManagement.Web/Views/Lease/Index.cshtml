@@ -20,17 +20,18 @@
                             <div class="col-lg-12">
                                 <div class="demo-inline-spacing mt-3">
                                     @{
-                                        int curMonth = DateTime.Now.Month;
+                                        var selMonth = ViewBag.SelectedMonth;
+
                                         foreach (var m in ViewBag.Months)
                                         {
-                                            if (curMonth == m.MonthId)
-                                            { 
-                                                <button type="button" id="@m.MonthId" class="btn btn-primary spaceRight">@m.MonthAbbr-Rent &nbsp; </button>
-                                            }
+                                            if (selMonth == m.MonthId) 
+                                                {
+                                                    <button type="button" id="@m.MonthId" class="lnkMonth btn btn-primary spaceRight">@m.MonthAbbr-Rent &nbsp; </button>
+                                                }
                                             else
-                                            {
-                                                <button type="button" id="@m.MonthId" class="btn btn-secondary spaceRight">@m.MonthAbbr-Rent &nbsp; </button>
-                                            }
+                                                {
+                                                    <button type="button" id="@m.MonthId" class="lnkMonth btn btn-secondary spaceRight">@m.MonthAbbr-Rent &nbsp; </button>
+                                                }
                                         }
                                     }
                                 </div>
@@ -126,50 +127,32 @@
         dialogWidth = screenWidth * .60;
         dialogHeight = screenHeight * .60;
 
-        $('#TblLease').DataTable({
-            pageLength: 25,
-            responsive: true,
-            dom: '<"html5buttons"B>lTfgitp',
-            buttons: [
-                { extend: 'copy' },
-                { extend: 'csv' },
-                { extend: 'excel', title: 'ExampleFile' },
-                { extend: 'pdf', title: 'ExampleFile' },
+        LoadData(0, 0);
 
-                {
-                    extend: 'print',
-                    customize: function (win) {
-                        $(win.document.body).addClass('white-bg');
-                        $(win.document.body).css('font-size', '10px');
-
-                        $(win.document.body).find('table')
-                            .addClass('compact')
-                            .css('font-size', 'inherit');
-                    }
-                }
-            ]
-        });
+        var oLeaseTable = $('table#TblLease').DataTable();
 
         $("#TblLease tbody tr").on('click', function (event) {
             $("#TblLease tbody tr").removeClass('row_selected');
             $(this).addClass('row_selected');
         });
 
+        //load data from selected momth
+        $(".lnkMonth").click(function () {
+            var year = $('#ddYears :selected').text();
+            var month = $(this).attr("id");
+
+            LoadData(year, month);
+        });
+
         function LoadData(year, month) {
-
-            $.post('/Lease/Index', {
-                "Year": year,
-                "Month": month
-            },
-                function (data, status) {
-                    //alert("Data: " + data + "\nStatus: " + status);
-                    if (data == "") {
-
-                    }
-                    else {
-                        $("#spCreateMessage").text(data);
-                    }
-                });
+            $.ajax({
+                url: "/Lease/Index",
+                type: 'Get',
+                data: {
+                    "Year": year,
+                    "Month": month
+                }
+            });
         }
 
         $("#AddPropertyForm").dialog({

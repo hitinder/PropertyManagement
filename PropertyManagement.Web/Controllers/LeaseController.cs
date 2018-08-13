@@ -17,8 +17,8 @@ namespace PropertyManagement.Web.Controllers
         private readonly ICommonListService _commonListService;
         private readonly ITenantService _tenantService;
 
-        int _year = DateTime.Now.Year;
-        int _month = DateTime.Now.Month;
+        
+        
 
         public LeaseController(ILeaseService leaseService, IPropertyService propertyService, IStatusService statusService, IRepairService repairService, ICommonListService commonListService, ITenantService tenantService)
         {
@@ -33,15 +33,22 @@ namespace PropertyManagement.Web.Controllers
         {
 
             if (Year == 0)
+            {
+                int _year = DateTime.Now.Year;
                 Year = _year;
+            }
             if (Month == 0)
+            {
+                int _month = DateTime.Now.Month;
                 Month = _month;
+            }
 
             var years =  _commonListService.YearList();
             var selectedYear = DateTime.Now.Year;
             SelectList ListYears = new SelectList(years, "Year", "Year", selectedYear);         
             ViewBag.Years = ListYears;
             ViewBag.Months =  _commonListService.MonthList();
+            ViewBag.SelectedMonth = Month;
 
             var query = await _leaseService.LeaseList(Year, Month);
             return View(query);
