@@ -49,6 +49,7 @@ namespace PropertyManagement.Web.Controllers
             ViewBag.Years = ListYears;
             ViewBag.Months =  _commonListService.MonthList();
             ViewBag.SelectedMonth = Month;
+            ViewBag.SelectedYear = Year;
 
             var query = await _leaseService.LeaseList(Year, Month);
             return View(query);
@@ -98,11 +99,11 @@ namespace PropertyManagement.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SaveDataLease(int LeaseId, int TenantId, decimal RentAmount, decimal AmountRecieved, string DateRecieved, decimal PastDue, decimal CurrentDue, decimal BalanceDue, string Notes)
+        public async Task<IActionResult> SaveDataLease(int LeaseId, int TenantId, decimal RentAmount, decimal AmountRecieved, string DateReceived, decimal PastDue, decimal CurrentDue, decimal BalanceDue, string Notes)
         {
             try
             {
-                await this._leaseService.LeaseUpdate(LeaseId, TenantId, RentAmount, AmountRecieved, DateRecieved, PastDue, CurrentDue, BalanceDue, Notes);
+                await this._leaseService.LeaseUpdate(LeaseId, TenantId, RentAmount, AmountRecieved, DateReceived, PastDue, CurrentDue, BalanceDue, Notes);
             }
             catch (SqlException ex)
             {

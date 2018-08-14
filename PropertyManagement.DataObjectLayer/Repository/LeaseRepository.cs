@@ -56,7 +56,7 @@ namespace PropertyManagement.DataObjectLayer
         }
         
 
-        public async Task LeaseUpdate(int LeaseId, int TenantId, decimal RentAmount, decimal AmountRecieved, string DateRecieved, decimal PastDue, decimal CurrentDue, decimal BalanceDue, string Notes)
+        public async Task LeaseUpdate(int LeaseId, int TenantId, decimal RentAmount, decimal AmountRecieved, string DateReceived, decimal PastDue, decimal CurrentDue, decimal BalanceDue, string Notes)
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
@@ -66,7 +66,7 @@ namespace PropertyManagement.DataObjectLayer
                 dynamicParameters.Add("@p_intTenantId", TenantId);
                 dynamicParameters.Add("@p_chrRentAmount", RentAmount);
                 dynamicParameters.Add("@p_chrAmountRecieved", AmountRecieved);
-                dynamicParameters.Add("@p_chrDateRecieved", DateRecieved);
+                dynamicParameters.Add("@p_chrDateReceived", DateReceived);
                 dynamicParameters.Add("@p_chrPastDue", PastDue);
                 dynamicParameters.Add("@p_chrCurrentDue", CurrentDue);
                 dynamicParameters.Add("@p_chrBalanceDue", BalanceDue);
